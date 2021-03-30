@@ -18,7 +18,6 @@ install -m 755 files/rw			"${ROOTFS_DIR}/usr/local/bin"
 
 # wireless LAN configuration
 cat files/interfaces > "${ROOTFS_DIR}/etc/network/interfaces"
-cat files/wpa_supplicant.conf > "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf"
 
 # make shure we will always send a cleint identifier to keep the ip
 echo -e '\nsend dhcp-client-identifier "Framboise-Lambic";\n' >>"${ROOTFS_DIR}/etc/dhcp/dhclient.conf"
