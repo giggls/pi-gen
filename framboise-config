@@ -1,0 +1,7 @@
+IMG_NAME='FrambOiSe'
+TARGET_HOSTNAME=Framboise
+ENABLE_SSH=1
+DEPLOY_ZIP=0
+WPA_COUNTRY=de
+WPA_PASSWORD=very_secret_wpa_password
+WPA_ESSID=framboise_wlan
