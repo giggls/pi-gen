@@ -2,6 +2,22 @@
 
 Tool used to create Raspberry Pi OS images. (Previously known as Raspbian).
 
+## A readonly root-filesystem version!
+
+This is a fork of the official Raspberry Pi OS image where the
+root-filesystem is mounted readonly.
+
+It is especially usefull in embedded environments where an unpropper
+shutdown of the system (e.g. power cycling) is the norm rather than an
+exception.
+
+The readonly system is automatically activated after first boot. We also do
+a resize of the root-filesystem to full SD size.
+
+For using wireless LAN add your WPA-key to /etc/wpa_supplicant/wpa_supplicant.conf
+and adjust /etc/network/interfaces.
+
+Use framboise-build.sh to build.
 
 ## Dependencies
 

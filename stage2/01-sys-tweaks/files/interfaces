@@ -1,0 +1,7 @@
+
+# uncomment to enable WLAN
+# also add WPA key to /etc/wpa_supplicant/wpa_supplicant.conf
+#allow-hotplug wlan0
+
+iface wlan0 inet dhcp
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf

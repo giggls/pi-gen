@@ -1,0 +1,5 @@
+#!/bin/sh
+if grep /dev/root /proc/mounts |grep -q ' ro'; then
+  mount -o remount,rw /
+fi
+
