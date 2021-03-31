@@ -19,6 +19,9 @@ and adjust /etc/network/interfaces.
 
 Use framboise-build.sh to build.
 
+I also added two scripts called `ro` and `rw` to remount / and /boot in the
+desired mode. This will of course work as root (or using sudo) only.
+
 ## Dependencies
 
 pi-gen runs on Debian-based operating systems. Currently it is only supported on
