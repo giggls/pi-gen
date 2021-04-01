@@ -31,3 +31,22 @@
  fi
  
  # colored GCC warnings and errors
+@@ -111,3 +111,18 @@
+     . /etc/bash_completion
+   fi
+ fi
++
++# resize function for serial console
++# https://unix.stackexchange.com/questions/16578/resizable-serial-console-window
++function resize() {
++  old=$(stty -g)
++  stty -echo
++  printf '\033[18t'
++  IFS=';' read -d t _ rows cols _
++  stty "$old"
++  stty cols "$cols" rows "$rows"
++}
++
++if [ $(tty) == '/dev/ttyS0' ]; then
++  trap resize DEBUG
++fi
