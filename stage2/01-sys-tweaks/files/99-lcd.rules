@@ -1,0 +1,2 @@
+# UDEV rule for /dev/lcd
+KERNEL=="lcd", SUBSYSTEM=="misc" , GROUP="gpio", MODE="0660"

@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+set -x
+
 install -m 644 files/sources.list "${ROOTFS_DIR}/etc/apt/"
 install -m 644 files/raspi.list "${ROOTFS_DIR}/etc/apt/sources.list.d/"
 sed -i "s/RELEASE/${RELEASE}/g" "${ROOTFS_DIR}/etc/apt/sources.list"
@@ -16,4 +18,14 @@ on_chroot apt-key add - < files/raspberrypi.gpg.key
 on_chroot << EOF
 apt-get update
 apt-get dist-upgrade -y
+apt-get -y install ca-certificates openssl
 EOF
+
+install -m 644 files/web20mash.list     "${ROOTFS_DIR}/etc/apt/sources.list.d"
+on_chroot << EOF
+apt-get update
+EOF
+
+
+
+
