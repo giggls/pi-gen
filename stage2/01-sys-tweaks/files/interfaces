@@ -1,7 +1,14 @@
 
 # uncomment to enable WLAN
-# also add WPA key to /etc/wpa_supplicant/wpa_supplicant.conf
-#allow-hotplug wlan0
+# allow-hotplug wlan0
 
-iface wlan0 inet dhcp
-	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+# uncomment to enable wired Ethernet
+# allow-hotplug eth0
+
+iface eth0 inet dhcp
+
+iface wlan0 inet manual
+	wpa-driver wext
+	wpa-roam /boot/network/wpa_roam.conf
+
+iface dhcpif inet dhcp
