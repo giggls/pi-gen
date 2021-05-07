@@ -43,7 +43,7 @@
 #arm_freq=800
 
 # Uncomment some or all of these to enable the optional hardware interfaces
-dtparam=i2c_arm=on
+#dtparam=i2c_arm=on
 #dtparam=i2s=on
 #dtparam=spi=on
 
@@ -59,17 +59,8 @@ dtparam=audio=on
 # Enable serial console
 enable_uart=1
 
-# Hardware Setup for Web 2.0 Mash / Fango PCB
-
-# rotary encoder
-dtoverlay=rotary-encoder,pin_a=9,pin_b=10,relative_axis=1
-
-# switch in rotary encoder
-dtoverlay=gpio-key,gpio=22,keycode=28,label="ENTER"
-
-# 4x20 display
-dtoverlay=hd44780-lcd,pin_d4=23,pin_d5=24,pin_d6=25,pin_d7=4
-dtparam=pin_rs=7,pin_en=8,display_width=20,display_height=4
+# 1 wire sensor on GPIO 4
+dtoverlay=w1-gpio,gpiopin=4
 
 [pi4]
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack

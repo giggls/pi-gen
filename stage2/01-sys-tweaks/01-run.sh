@@ -24,12 +24,6 @@ rm -f "${ROOTFS_DIR}/etc/network/interfaces"
 ln -sf /boot/network/interfaces "${ROOTFS_DIR}/etc/network/interfaces"
 install files/wpa_roam.conf "${ROOTFS_DIR}/boot/network/wpa_roam.conf"
 
-# sysfs.conf for Fango PCB
-cat files/sysfs.conf > "${ROOTFS_DIR}/etc/sysfs.conf"
-
-# load additional modules
-cat files/modules > "${ROOTFS_DIR}/etc/modules"
-
 # make shure we will always send a cleint identifier to keep the ip
 echo -e '\nsend dhcp-client-identifier "Framboise-Lambic";\n' >>"${ROOTFS_DIR}/etc/dhcp/dhclient.conf"
 
@@ -55,7 +49,6 @@ else
 	systemctl disable ssh
 fi
 systemctl enable webmash
-systemctl enable wm4x20c
 EOF
 
 if [ "${USE_QEMU}" = "1" ]; then
@@ -95,10 +88,11 @@ on_chroot << EOF
 EOF
 
 # changes for Web 2.0 Mash image
-install -m 644 files/99-lcd.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
 mkdir "${ROOTFS_DIR}/etc/systemd/system/webmash.service.d"
 install -m 644 files/webmash.service.override.conf "${ROOTFS_DIR}/etc/systemd/system/webmash.service.d/override.conf"
-mkdir "${ROOTFS_DIR}/etc/systemd/system/wm4x20c.service.d"
-install -m 644 files/wm4x20c.service.override.conf "${ROOTFS_DIR}/etc/systemd/system/wm4x20c.service.d/override.conf"
 install -m 644 files/mashctld.conf "${ROOTFS_DIR}/etc/mashctld.conf"
+install -m 644 files/owfs.conf "${ROOTFS_DIR}/etc/owfs.conf"
+on_chroot << EOF
+  systemctl enable owserver.socket
+EOF
 
