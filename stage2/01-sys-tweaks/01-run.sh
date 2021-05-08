@@ -85,6 +85,12 @@ on_chroot << EOF
   ln -s /tmp/random-seed /var/lib/systemd/random-seed
   rm -f /etc/resolv.conf
   ln -sf /run/resolvconf/resolv.conf /etc/resolv.conf 
+  systemctl mask apt-daily.service
+  systemctl mask apt-daily.timer
+  systemctl mask apt-daily-upgrade.service
+  systemctl mask apt-daily-upgrade.timer
+  systemctl mask man-db.timer
+  systemctl mask man-db.service
 EOF
 
 # changes for Web 2.0 Mash image
@@ -92,7 +98,13 @@ mkdir "${ROOTFS_DIR}/etc/systemd/system/webmash.service.d"
 install -m 644 files/webmash.service.override.conf "${ROOTFS_DIR}/etc/systemd/system/webmash.service.d/override.conf"
 install -m 644 files/mashctld.conf "${ROOTFS_DIR}/etc/mashctld.conf"
 install -m 644 files/owfs.conf "${ROOTFS_DIR}/etc/owfs.conf"
+install -m 644 files/99-*.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
 on_chroot << EOF
+  systemctl mask wm4x20c.service
   systemctl enable owserver.socket
+  systemctl mask avahi-daemon.socket
+  systemctl mask avahi-daemon.service
+  systemctl mask bluetooth.service
+  systemctl mask hciuart.service
 EOF
 
