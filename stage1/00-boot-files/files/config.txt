@@ -71,6 +71,12 @@ dtoverlay=gpio-key,gpio=22,keycode=28,label="ENTER"
 dtoverlay=hd44780-lcd,pin_d4=23,pin_d5=24,pin_d6=25,pin_d7=4
 dtparam=pin_rs=7,pin_en=8,display_width=20,display_height=4
 
+# use this if 1-wire sensor is conencted to GPIO instead of I2C
+# you will also need to enable owserver in this case using the
+# following command in rw mode:
+# systemctl enable owserver
+# dtoverlay=w1-gpio,gpiopin=20
+
 [pi4]
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack
 dtoverlay=vc4-fkms-v3d

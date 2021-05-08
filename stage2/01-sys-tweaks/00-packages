@@ -38,3 +38,5 @@ i2c-tools
 sysfsutils
 web20mash
 webmash4x20client
+owserver
+ow-shell
