@@ -24,6 +24,10 @@ rm -f "${ROOTFS_DIR}/etc/network/interfaces"
 ln -sf /boot/network/interfaces "${ROOTFS_DIR}/etc/network/interfaces"
 install files/wpa_roam.conf "${ROOTFS_DIR}/boot/network/wpa_roam.conf"
 
+# need to mount /boot before runing networking.service 
+mkdir "${ROOTFS_DIR}/etc/systemd/system/networking.service.d"
+install -m 644 files/networking.service.override.conf "${ROOTFS_DIR}/etc/systemd/system/networking.service.d/override.conf"
+
 # sysfs.conf for Fango PCB
 cat files/sysfs.conf > "${ROOTFS_DIR}/etc/sysfs.conf"
 
