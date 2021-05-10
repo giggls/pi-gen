@@ -24,8 +24,12 @@ rm -f "${ROOTFS_DIR}/etc/network/interfaces"
 ln -sf /boot/network/interfaces "${ROOTFS_DIR}/etc/network/interfaces"
 install files/wpa_roam.conf "${ROOTFS_DIR}/boot/network/wpa_roam.conf"
 
-# make shure we will always send a cleint identifier to keep the ip
-echo -e '\nsend dhcp-client-identifier "Framboise-Lambic";\n' >>"${ROOTFS_DIR}/etc/dhcp/dhclient.conf"
+# need to mount /boot before runing networking.service 
+mkdir "${ROOTFS_DIR}/etc/systemd/system/networking.service.d"
+install -m 644 files/networking.service.override.conf "${ROOTFS_DIR}/etc/systemd/system/networking.service.d/override.conf"
+
+# make sure we will always send a client identifier to keep the ip
+echo -e '\nsend dhcp-client-identifier "Framboise Boon";\n' >>"${ROOTFS_DIR}/etc/dhcp/dhclient.conf"
 
 if [ -n "${PUBKEY_SSH_FIRST_USER}" ]; then
 	install -v -m 0700 -o 1000 -g 1000 -d "${ROOTFS_DIR}"/home/"${FIRST_USER_NAME}"/.ssh

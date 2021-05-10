@@ -1,6 +1,6 @@
 
 # uncomment to enable WLAN
-# allow-hotplug wlan0
+# auto wlan0
 
 # uncomment to enable wired Ethernet
 # allow-hotplug eth0
