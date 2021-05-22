@@ -3,7 +3,7 @@
 # auto wlan0
 
 # uncomment to enable wired Ethernet
-# allow-hotplug eth0
+# auto eth0
 
 iface eth0 inet dhcp
 

@@ -116,5 +116,7 @@ on_chroot << EOF
   systemctl mask avahi-daemon.service
   systemctl mask bluetooth.service
   systemctl mask hciuart.service
+  # group gpio does not exist yet on install time of web20mash
+  usermod -G gpio webmash
 EOF
 
