@@ -90,6 +90,8 @@ rm -f "${ROOTFS_DIR}/etc/ssh/"ssh_host_*_key*
 
 # changes for readonly image
 # also use resolvconf to avoid needing a writeable /etc/resolv.conf
+cp files/overlay "${ROOTFS_DIR}/etc/initramfs-tools/scripts/"
+cp files/systemd-timesyncd.service "${ROOTFS_DIR}/etc/systemd/system/systemd-timesyncd.service"
 on_chroot << EOF
   mkdir /etc/systemd/system/systemd-random-seed.service.d
   echo -e '[Service]\nExecStartPre=/bin/echo "" >/tmp/random-seed' >/etc/systemd/system/systemd-random-seed.service.d/readonly.conf

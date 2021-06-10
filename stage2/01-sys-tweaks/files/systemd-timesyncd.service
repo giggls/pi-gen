@@ -1,0 +1,22 @@
+[Unit]
+Description=Network Time Synchronization
+Documentation=man:systemd-timesyncd.service(8)
+DefaultDependencies=no
+After=systemd-remount-fs.service systemd-sysusers.service
+Before=time-sync.target sysinit.target shutdown.target
+Conflicts=shutdown.target
+Wants=time-sync.target
+ConditionCapability=CAP_SYS_TIME
+
+[Service]
+AmbientCapabilities=CAP_SYS_TIME
+ExecStart=!!/lib/systemd/systemd-timesyncd
+RuntimeDirectory=systemd/timesync
+StateDirectory=systemd/timesync
+Type=notify
+User=systemd-timesync
+WatchdogSec=3min
+
+[Install]
+WantedBy=sysinit.target
+Alias=dbus-org.freedesktop.timesync1.service
