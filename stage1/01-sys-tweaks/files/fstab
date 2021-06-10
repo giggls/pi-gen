@@ -5,5 +5,3 @@ tmpfs    /tmp            tmpfs   nosuid,nodev      0       0
 tmpfs    /var/log        tmpfs   nosuid,nodev      0       0
 tmpfs    /var/tmp        tmpfs   nosuid,nodev      0       0
 tmpfs    /var/lib/dhcp   tmpfs   nosuid,nodev      0       0
-# various systemd related stuff seems to expect that /var/lib/systemd is writeable :(
-overlay  /var/lib/systemd overlay x-systemd.requires=systemd-tmpfiles-setup.service,lowerdir=/var/lib/systemd,upperdir=/tmp/systemd,workdir=/tmp/ovwork 0 0

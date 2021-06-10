@@ -7,12 +7,25 @@ mount -t proc none /proc
 mount -o remount,rw /dev/mmcblk0p2 /
 mount /dev/mmcblk0p1 /boot
 
+echo "creating initramfs:"
+echo overlay >/etc/initramfs-tools/modules
+update-initramfs -c -k $(uname -r) 2>/dev/null >/dev/null
+echo "done."
+
 echo "resizing root filesystem:"
 resize2fs /dev/mmcblk0p2
 echo "done."
 
 echo -n "setting /boot/cmdline.txt to ro mode... "
 sed -i -e 's/ init=[^ ]\+//g' -e 's/rootwait/rootwait fastboot noswap ro/g' /boot/cmdline.txt
+echo "done."
+
+initramfs=$(basename /boot/initrd.img-*)
+
+echo -n "enabling initramfs for overlayfs... "
+sed -i -e "s/^ *# *initramfs.*/initramfs $initramfs/g" /boot/config.txt
+sed -i -e 's/^/boot=overlay /g' /boot/cmdline.txt
+mkdir /ovl
 echo "done."
 
 echo -n "setting /etc/fstab to ro mode... "
