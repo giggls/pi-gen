@@ -1,0 +1,40 @@
+# Local filesystem mounting			-*- shell-script -*-
+
+# This script overrides local_mount_root() in /scripts/local
+# and does three things:
+# mounts root as a read-only filesystem
+# mount a ramfs at /ovl/
+# setup an overlayfs for /var/lib/systemd/
+
+. /scripts/local
+
+local_mount_root()
+{
+	local_top
+	if [ -z "${ROOT}" ]; then
+		panic "No root device specified. Boot arguments must include a root= parameter."
+	fi
+	local_device_setup "${ROOT}" "root file system"
+	ROOT="${DEV}"
+
+	# Get the root filesystem type if not set
+	if [ -z "${ROOTFSTYPE}" ] || [ "${ROOTFSTYPE}" = auto ]; then
+		FSTYPE=$(get_fstype "${ROOT}")
+	else
+		FSTYPE=${ROOTFSTYPE}
+	fi
+
+	local_premount
+	
+	# Mount root
+	# shellcheck disable=SC2086
+	if ! mount -r ${FSTYPE:+-t "${FSTYPE}"} ${ROOTFLAGS} "${ROOT}" "${rootmnt?}"; then
+		panic "Failed to mount ${ROOT} as root file system."
+	fi
+	
+	#mkdir ${rootmnt?}/ovl
+	mount -t tmpfs tmpfs ${rootmnt?}/ovl
+	mkdir -p ${rootmnt?}/ovl/data/var/lib/systemd
+	mkdir -p ${rootmnt?}/ovl/work/var/lib/systemd
+	mount -t overlay overlay -o lowerdir=${rootmnt?}/var/lib/systemd,upperdir=${rootmnt?}/ovl/data/var/lib/systemd,workdir=${rootmnt?}/ovl/work/var/lib/systemd ${rootmnt?}/var/lib/systemd/	
+}

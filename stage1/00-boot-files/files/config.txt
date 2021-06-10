@@ -59,6 +59,9 @@ dtparam=audio=on
 # Enable serial console
 enable_uart=1
 
+# uncomment to boot via initramfs
+# initramfs initrd.img-5.10.17-v7+
+
 [pi4]
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack
 dtoverlay=vc4-fkms-v3d
